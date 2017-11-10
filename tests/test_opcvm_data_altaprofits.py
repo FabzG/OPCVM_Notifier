@@ -1,4 +1,5 @@
 import datetime
+import opcvm_notifier.opcvm_data_altaprofits as opcvm_data_altaprofits
 
 class TestOpcvmDataAltaprofits():
 
@@ -13,8 +14,3 @@ class TestOpcvmDataAltaprofits():
         test_altaprofits = opcvm_data_altaprofits.OpcvmDataAltaprofits()
         actual_value = test_altaprofits.get_value("FR0007016068")
         assert actual_value == 630.39
-
-'''
-    def __init__(self):
-        self._base_url = "https://www.altaprofits.com/services/graphes/actifHistoData.jsp?isinList="
-'''
