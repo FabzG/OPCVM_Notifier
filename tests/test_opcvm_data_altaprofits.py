@@ -4,6 +4,7 @@ import pytest
 
 class TestOpcvmDataAltaprofits():
 
+    @pytest.mark.skip
     def test_get_history(self):
         # for "UBS EUROPEAN OPPORTUNITY UNCONSTRAINED PEA (EUR) R", 2000-01-10 -> 277,2
         test_altaprofits = opcvm_data_altaprofits.OpcvmDataAltaprofits()
@@ -14,5 +15,5 @@ class TestOpcvmDataAltaprofits():
     def test_get_actual_value(self):
         # for "UBS EUROPEAN OPPORTUNITY UNCONSTRAINED PEA (EUR) R"
         test_altaprofits = opcvm_data_altaprofits.OpcvmDataAltaprofits()
-        actual_value = test_altaprofits.get_value("FR0007016068")
-        assert actual_value == 630.39
+        actual_value = test_altaprofits.get_value("FR0010011171", "AXA OR ET MATIÈRES PREMIÈRES (C)")
+        assert actual_value == 628.09
