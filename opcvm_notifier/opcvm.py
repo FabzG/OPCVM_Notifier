@@ -17,5 +17,8 @@ class Opcvm:
     def get_value_list(self):
         return self._values
 
+    def set_value_list(self, values_list):
+        self._values = values_list
+
     def add_value(self, date, value):
         self._values[date] = value

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class OpcvmFortuneo:
 
     def __init__(self):
-        self._BASE_URL = "http://bourse.fortuneo.fr/api/sicav/search/?additionalParams=%7B%22ftnVie%22:%22true%22,%22view%22:%22VUE_PERF%22%7D&page="
+        self._BASE_URL = "https://bourse.fortuneo.fr/api/sicav/search/?additionalParams=%7B%22ftnVie%22:%22true%22,%22view%22:%22VUE_PERF%22%7D&page="
 
     def get_base_url(self):
         return self._BASE_URL
@@ -24,7 +24,11 @@ class OpcvmFortuneo:
                 for elemtab in json_data['array']['data']:
                     soup = BeautifulSoup(elemtab[0], 'html.parser')
                     a_tag = soup.find("a")
-                    list_opcvm_fortuneo.append(opcvm_notifier.opcvm.Opcvm(str(a_tag.get('title')), str(a_tag.get('href'))))
+                    opcvm_name = str(a_tag.get('title'))
+                    opcvm_href = str(a_tag.get('href'))
+                    href_tab = opcvm_href.split('-')
+                    opcvm_isin = href_tab[href_tab.__len__() - 2]
+                    list_opcvm_fortuneo.append(opcvm_notifier.opcvm.Opcvm(opcvm_name, opcvm_isin))
 
                 page = page+1
             else:
@@ -32,13 +36,20 @@ class OpcvmFortuneo:
 
         return list_opcvm_fortuneo
 
+fortu = OpcvmFortuneo()
+list_op = fortu.get_list_opcvm()
+for opcvm in list_op:
+        print(opcvm.get_name())
+        print(opcvm.get_isim())
 
+
+'''
 req = urllib.request.urlopen("https://services.opcvm360.com/api-v1/fundshares?fundshares=63420340,16560,19440,2423,63424605,3621,5018,3748,7571,12631,20521,3357,16589,19955,7939,19846,26219,63422586,63408909,16357,16618,8172&fields=isin,idFund,srri,name,varPYTD,varP1Y,varP3Y,varP5Y&apiKey=b0b645dc2b704ae3ec14", context=ssl.SSLContext(ssl.PROTOCOL_SSLv23))
 json_data = json.load(req)
 if json_data['data']:
     for elemtab2 in json_data['data']:
         print(elemtab2)
-
+'''
 '''
 test = OpcvmFortuneo()
 opcvmlist = test.get_list_opcvm()
